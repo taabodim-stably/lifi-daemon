@@ -1,0 +1,7 @@
+BindingPort=5003
+
+[PolymeshRPC]
+NodeURL="wss://testnet-rpc.polymesh.live"
+
+[SecurityToken.USDS]
+TokenDecimal=6

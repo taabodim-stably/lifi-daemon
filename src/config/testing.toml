@@ -1,0 +1,7 @@
+[Part1]
+field1 = 1234
+field2 = "abc"
+
+[AnotherPart]
+myField = 12.4444
+testField = "dsdsadsadsa"

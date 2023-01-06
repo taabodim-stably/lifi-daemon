@@ -1,0 +1,7 @@
+BindingPort=5000
+
+[PolymeshRPC]
+NodeURL="wss://mainnet-rpc.polymesh.network"
+
+[SecurityToken.USDS]
+TokenDecimal=6

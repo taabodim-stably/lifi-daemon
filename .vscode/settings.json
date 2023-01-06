@@ -1,0 +1,30 @@
+{
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "eslint.enable": true,
+    "eslint.format.enable": true,
+    "eslint.codeActionsOnSave.mode": "all",
+    "eslint.options": {
+        "configFile": "./.eslintrc.json"
+    },
+    "jest.autoRun": "off",
+    "jest.rootPath": "./",
+    "jest.jestCommandLine": "yarn test",
+    "[json]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        },
+        "files.insertFinalNewline": true
+    },
+    "[typescript]": {
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        }
+    },
+    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
+    "[makefile]": {
+        "editor.insertSpaces": false,
+        "editor.tabSize": 4
+    }
+}

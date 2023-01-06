@@ -1,0 +1,75 @@
+{
+  "name": "lifi-daemon",
+  "version": "1.0.0",
+  "description": "LiFi Daemon",
+  "engines": {
+    "yarn": ">=3.1.0",
+    "node": ">=15.14.0"
+  },
+  "scripts": {
+    "tsnode": "env-cmd -f .env env-cmd -f .env.local yarn ts-node -r tsconfig-paths/register",
+    "test": "env-cmd -f .env yarn jest",
+    "test:unit": "yarn test --testPathPattern=test\\.unit\\.ts --silent",
+    "test:integ": "yarn test --testPathPattern=test\\.integ\\.ts --silent",
+    "test:prod": "env-cmd -f .env yarn jest --rootDir ./dist",
+    "test:prod:unit": "yarn test:prod --testPathPattern=test\\.unit\\.js --silent",
+    "test:prod:integ": "yarn test:prod --testPathPattern=test\\.integ\\.js --silent",
+    "lint": "eslint . --ext .ts --ext .js --ext .json",
+    "lint-fix": "yarn lint --fix && yarn typecheck",
+    "typecheck": "tsc --noEmit",
+    "checking": "yarn lint && yarn typecheck",
+    "ci": "yarn checking && yarn test:unit",
+    "build": "tsc -p .",
+    "node:prod": "yarn node -r ./tsconfig-paths-bootstrap.js",
+    "node:prod.local": "TSCONFIG_BASE_URL=./dist yarn node:prod",
+    "preinstall": "yarn build"
+  },
+  "dependencies": {
+    "@lifi/sdk": "^1.7.2",
+    "@polymeshassociation/local-signing-manager": "^1.2.1",
+    "@polymeshassociation/polymesh-sdk": "^18.0.2",
+    "@types/express": "^4.17.14",
+    "argparse": "^2.0.1",
+    "env-cmd": "^10.1.0",
+    "ethers": "^5.7.2",
+    "express": "^4.18.1",
+    "prettier": "^2.2.1",
+    "require-json5": "^1.1.0",
+    "toml": "^3.0.0",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.8.4"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-typescript": "^7.13.0",
+    "@types/argparse": "^2.0.10",
+    "@types/jest": "^26.0.21",
+    "@types/node": "^14.14.21",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "console-table-printer": "^2.10.0",
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jsdoc": "^37.0.3",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-unused-imports": "^1.1.5",
+    "jest": "^27.1.1",
+    "pre-commit": "^1.2.2",
+    "ts-jest": "^26.5.4",
+    "tsconfig-paths-jest": "^0.0.1"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "pre-commit": [
+    "checking"
+  ],
+  "license": "ISC",
+  "packageManager": "yarn@3.3.1"
+}

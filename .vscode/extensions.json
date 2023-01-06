@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "ms-azuretools.vscode-docker",
+    "donjayamanne.githistory",
+    "eamodio.gitlens",
+    "ms-vsliveshare.vsliveshare",
+    "ms-vscode-remote.remote-containers",
+    "ms-vscode-remote.remote-ssh",
+    "ms-vscode-remote.remote-ssh-edit",
+    "dbaeumer.vscode-eslint"
+  ]
+}
