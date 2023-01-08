@@ -1,13 +1,11 @@
 import express from "express";
 
 import {
-  affirmPendingInstructionRoute,
-  createVenueRoute, demo, demoStaging,
-  getAccountAddressRoute,
-  getAccountCurrentNonceRoute,
-  getUserAssetBalanceRoute,
-  healthCheckRoute,
+  executeQuote,
+  demoStaging,
+  healthCheckRoute, getTxnStatus,
 } from "./route";
+import {WalletHolder} from "@root/wallet";
 
 /**
  * Start the service
@@ -19,21 +17,20 @@ export async function startServer(port: number): Promise<void> {
 
   app.use(express.json());
 
+  // define the instance variable
+  app.locals.FromWallet = WalletHolder.getInstance().wallet;
+
+  // app.use((req, _, next) => {
+  //   // @ts-ignore
+  //   // req.FromWallet = app.locals.FromWallet;
+  //   // @ts-ignore
+  //   // req.mnemonic = process.env.MNEMONIC;
+  //   next();
+  // });
+
   app.get("/lifi-daemon/demostaging", demoStaging);
-  app.get("/lifi-daemon/demo", demo);
-
-  app.post("/lifi-daemon/get_user_asset_balance", getUserAssetBalanceRoute);
-
-  app.post("/lifi-daemon/get_current_nonce", getAccountCurrentNonceRoute);
-
-  app.post("/lifi-daemon/get_account_address", getAccountAddressRoute);
-
-  app.post("/lifi-daemon/create_venue", createVenueRoute);
-
-  app.post(
-    "/lifi-daemon/affirm_pending_instruction",
-    affirmPendingInstructionRoute
-  );
+  app.get("/lifi-daemon/execute-quote", executeQuote);
+  app.get("/lifi-daemon/txn-status", getTxnStatus);
 
   // For ECS load balancer healthcheck
   app.get("/lifi-daemon/healthcheck", healthCheckRoute);
@@ -42,3 +39,5 @@ export async function startServer(port: number): Promise<void> {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
   });
 }
+
+

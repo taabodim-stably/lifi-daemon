@@ -1,4 +1,4 @@
-# Polymesh Client Service (Development tutorial)
+# LiFi Daemon (Development tutorial)
 
 ## Install
 
@@ -32,25 +32,4 @@ Run test:
 ```sh
 $ yarn test:prod:unit
 $ yarn test:prod:integ
-```
-
-## Interact with remote VPS
-
-Specify the required variables in `.env.local`
-
-```
-SSH_PATH=
-REMOTE_USER=
-REMOTE_HOST=
-REMOTE_WORKDIR=
-```
-
-Run the following command to login to the host:
-```sh
-$ make remote.connect
-```
-
-Run the following command to upload file to host:
-```sh
-$ make remote.upload path=./your_file.abc
 ```

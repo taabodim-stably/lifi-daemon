@@ -1,4 +1,4 @@
-# Polymesh Client Service
+# LiFi Daemon
 
 ## Prepare AWS CLI and IAM
 

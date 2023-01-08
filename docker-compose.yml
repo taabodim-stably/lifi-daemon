@@ -10,7 +10,7 @@ services:
       dockerfile: Dockerfile
     shm_size: '2g'
     ports:
-      - 50000:50000
+      - 5000:5000
     secrets:
       - api-config
     volumes:

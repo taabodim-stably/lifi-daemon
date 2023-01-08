@@ -10,7 +10,8 @@
     // This way, if someone is using your library and they also use TypeScript, they get the benefits of typesafety and autocomplete!
     "declaration": true,
     "lib": [
-        "ES2020.Promise"
+      "ES2020.Promise",
+      "dom"
     ], /* Specify library files to be included in the compilation. */
     // "allowJs": true,                       /* Allow javascript files to be compiled. */
     // "checkJs": true,                       /* Report errors in .js files. */

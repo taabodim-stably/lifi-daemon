@@ -23,26 +23,6 @@ init:
 	@echo Switching to yarn 3.x
 	@yarn set version berry
 
-#########################
-# Remote SSH host utils #
-#########################
-remote.connect:
-ifneq ($(and $(SSH_PATH),$(REMOTE_USER),$(REMOTE_HOST),$(REMOTE_WORKDIR)),)
-	@ssh -t -i ${SSH_PATH} ${REMOTE_USER}@${REMOTE_HOST} "cd ${REMOTE_WORKDIR}; bash -l"
-else
-	@echo You need to specify the information in .env.local
-	@exit 1
-endif
-
-remote.upload:
-ifdef path
-	@echo Uploading ${path} to ${REMOTE_HOST}:${REMOTE_WORKDIR}
-	@rsync -h -P -e "ssh -i ${SSH_PATH}" -a ${path} ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_WORKDIR}/${path}
-else
-	@echo You need to specify path argument
-	@echo Example: make remote.upload path=./your_file.txt
-	@exit 1
-endif
 
 #####################
 # Template required #
