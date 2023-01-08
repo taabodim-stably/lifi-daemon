@@ -181,10 +181,10 @@ export async function demoStaging(
       fromChainId: ChainId.GOR, // GOR
       fromAddress: "0x6181e0D52743C01bFA27c5c1Ac06eAFC941BDB9f",
       toAddress: "0x6181e0D52743C01bFA27c5c1Ac06eAFC941BDB9f",
-      fromAmount: "10000000000000000", // 1 USDT
-      fromTokenAddress: "0x0000000000000000000000000000000000000000",
+      fromAmount: "20000000000000000", // 0.02eth
       toChainId: ChainId.GOR, // xDai
-      toTokenAddress: "0xd87ba7a50b2e7e660f678a895e4b72e7cb4ccd9c",
+      fromTokenAddress: findDefaultToken(CoinKey.ETH, ChainId.GOR).address,
+      toTokenAddress: findDefaultToken(CoinKey.USDC, ChainId.GOR).address,
       options: {
         // slippage: 0.03, // = 3%
         // allowSwitchChain: false, // execute all transaction on starting chain
