@@ -29,7 +29,7 @@ $ make docker.buildanddeploy.lifi-daemon.prod
 
 ```
 Request:
-GET /lifi-daemon/execute-quote?toChain=gor&fromToken=eth&toToken=USDC&toAddress=0xD78a0beEc67f3902AcAa0E784D9FbB942B2bAe6d&fromAmount=2000000000000
+GET /lifi-daemon/execute-quote?toChain=gor&fromToken=eth&toToken=USDC&toAddress=0xD78a0beEc67f3902AcAa0E784D9FbB942B2bAe6d&fromAmount=0.0002
 
 Response:
 

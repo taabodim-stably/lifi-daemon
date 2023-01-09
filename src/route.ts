@@ -144,10 +144,13 @@ export async function executeQuote(
         // let fromToken: CoinKey = <CoinKey>CoinKey[fromTokenStr];
         // let toToken: CoinKey = <CoinKey>CoinKey[toTokenStr];
 
+        let fromTokenObj = findDefaultToken(fromToken, fromChain.id)
+        let fromAmountF = parseFloat(<string> req.query.fromAmount); // num will be 123
+
         const routeRequest = {
             fromChainId: getChainByKey(fromChainKey).id,
-            fromAmount: <string> req.query.fromAmount,
-            fromTokenAddress: findDefaultToken(fromToken, fromChain.id).address,
+            fromAmount: fromAmountF * Math.pow(10, fromTokenObj.decimals) + "",
+            fromTokenAddress: fromTokenObj.address,
             toChainId: getChainByKey(toChainKey).id,
             toTokenAddress: findDefaultToken(toToken, toChain.id).address,
             options: {
@@ -254,7 +257,7 @@ export async function getTxnStatus(
                 res.status(500)
                 res.send("error in getting txn status" + err.message)
             })
-        console.log(`tx status ${data}`);
+        console.log(`tx status ${JSON.stringify(data)}`);
         res.send(data)
     } catch (err) {
         console.error(err.message);
