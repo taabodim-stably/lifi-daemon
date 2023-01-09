@@ -5,7 +5,8 @@ import {
   demoStaging,
   healthCheckRoute, getTxnStatus,
 } from "./route";
-import {WalletHolder} from "@root/wallet";
+import {WalletHolder} from "./wallet";
+
 
 /**
  * Start the service
@@ -17,8 +18,9 @@ export async function startServer(port: number): Promise<void> {
 
   app.use(express.json());
 
-  // define the instance variable
-  app.locals.FromWallet = WalletHolder.getInstance().wallet;
+
+  // just testing getting aws
+  await WalletHolder.getInstance();
 
   // app.use((req, _, next) => {
   //   // @ts-ignore

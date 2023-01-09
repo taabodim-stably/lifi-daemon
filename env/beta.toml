@@ -1,10 +1,9 @@
-BindingPort=5003
+Environment = "beta"
+BindingPort=9888
 
 LiFiAPIURL='https://staging.li.quest/v1/'
 
-FromChainKey = "goerli"
+FromChainKey = "gor"
 FromProviderURL= "https://goerli.infura.io/v3/6f63a416ecba41729aaa00f44acc5023"
 FromNetworkID = 5
-
-ToChainKey = "goerli"
 

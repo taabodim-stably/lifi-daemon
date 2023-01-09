@@ -9,27 +9,10 @@ Config your local AWS CLI to have a privileged IAM account
 
 Check [development tutorial](./README.dev.md)
 
-## Prepare Venue ID
-
-Before deploying to ECS for Production, you need to setup the `SecurityToken.VenueID` in `env/prod.toml`
-
-First, place your issuer mnemonic to `secrets/issuer-mnemonic.txt`
-
-Then, run the following command and wait a bit:
-```shell
-$ yarn tsnode src/scripts/create-venue.ts
-```
-
 The expected output (trimmed)
 ```
 ...
-Initializing a new RPCClient
-Loading TOML config from env/beta.toml
-(node:16319) [DEP0128] DeprecationWarning: Invalid 'main' field in '/Users/dinosaurchi/Desktop/Project/stably-prime/lifi-daemon/node_modules/@polymeshassociation/local-signing-manager/package.json' of './src/index.js'. Please either fix that or report it to the module author
-(Use `node --trace-deprecation ...` to show where the warning was created)
-(node:16319) [DEP0128] DeprecationWarning: Invalid 'main' field in '/Users/dinosaurchi/Desktop/Project/stably-prime/lifi-daemon/node_modules/@polymeshassociation/polymesh-sdk/package.json' of 'dist/index.js'. Please either fix that or report it to the module author
-2022-12-07 11:16:58        REGISTRY: Unknown signed extensions StoreCallMetadata found, treating them as no-effect
-VenueID: 1005
+Loading TOML config from env/prod.toml
 ```
 
 Then, copy the `VenueID` value and set it to `SecurityToken.VenueID` in `env/prod.toml`
@@ -45,98 +28,19 @@ $ make docker.buildanddeploy.lifi-daemon.prod
 ## API
 
 ```
-POST /lifi-daemon/transfer_asset
-
 Request:
-{
-  "senderMnemonic": "",
-  "receiverAddress": "",
-  "amount": 12000000, // 1 USDS = 1e6 token amount
-  "assetTicker": "USDS",
-  "nonce": 1234,
-  "venueID": 1244,
-  "memo": "optional memo"
-}
+GET /lifi-daemon/execute-quote?toChain=gor&fromToken=eth&toToken=USDC&toAddress=0xD78a0beEc67f3902AcAa0E784D9FbB942B2bAe6d&fromAmount=2000000000000
 
 Response:
-{
-  "txHash": "",
-  "instructionID": "1244"
-}
+
+{"txHash":"0x4f29eb2d693a033df41f6cda05dd2f30956765f511746cdd6d5bba68390afd71"}
 ```
-- You can get the nonce via `/lifi-daemon/get_current_nonce` endpoint
-- You can create a venueID via `/lifi-daemon/create_venue` endpoint
-  - Save the created venueID to somewhere to be reused
-- The receiver needs to affirm the instruction of `instructionID` to finish the transaction
 
 ```
-POST /lifi-daemon/get_user_asset_balance
-
 Request:
-{
-  "mnemonic": "",
-  "assetTicker": "USDS"
-}
+GET /lifi-daemon/txn-status?bridge=&fromChain=gor&toChain=gor&txHash=0x4f29eb2d693a033df41f6cda05dd2f30956765f511746cdd6d5bba68390afd71
 
 Response:
-{
-  "balance": 1234 // 1234 USDS
-}
-```
 
-```
-POST /lifi-daemon/get_current_nonce
-
-Request:
-{
-  "mnemonic": ""
-}
-
-Response:
-{
-  "nonce": 65443
-}
-```
-
-```
-POST /lifi-daemon/get_account_address
-
-Request:
-{
-  "mnemonic": ""
-}
-
-Response:
-{
-  "address": ""
-}
-```
-
-```
-POST /lifi-daemon/create_venue
-
-Request:
-{
-  "mnemonic": ""
-}
-
-Response:
-{
-  "venueID": 1006
-}
-```
-
-```
-POST /lifi-daemon/affirm_pending_instruction
-
-Request:
-{
-  "mnemonic": "",
-  "pendingInstructionID", "1234"
-}
-
-Response:
-{
-  "affirmationTxHash": ""
-}
+{"status":"DONE","substatus":"COMPLETED","substatusMessage":"The transfer is complete.","tool":"uniswap-gor","sending":{"chainId":5,"txHash":"0x4f29eb2d693a033df41f6cda05dd2f30956765f511746cdd6d5bba68390afd71","txLink":"https://goerli.etherscan.io/tx/0x4f29eb2d693a033df41f6cda05dd2f30956765f511746cdd6d5bba68390afd71","amount":"2000000000000","token":{"chainId":5,"address":"0x0000000000000000000000000000000000000000","name":"ETH","symbol":"ETH","decimals":18,"logoURI":"https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png","coinKey":"ETH"},"gasAmount":"524187000000000","gasPrice":"3000000000","gasUsed":"174729","gasToken":{"chainId":5,"address":"0x0000000000000000000000000000000000000000","name":"ETH","symbol":"ETH","decimals":18,"logoURI":"https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png","coinKey":"ETH"},"gasAmountUSD":"0.00"},"receiving":{"txHash":"0x4f29eb2d693a033df41f6cda05dd2f30956765f511746cdd6d5bba68390afd71","txLink":"https://goerli.etherscan.io/tx/0x4f29eb2d693a033df41f6cda05dd2f30956765f511746cdd6d5bba68390afd71","amount":"4763371109","token":{"address":"0xd87ba7a50b2e7e660f678a895e4b72e7cb4ccd9c","decimals":6,"symbol":"USDC","chainId":5,"coinKey":"USDC","name":"USDC","logoURI":"https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png"},"chainId":5}}
 ```

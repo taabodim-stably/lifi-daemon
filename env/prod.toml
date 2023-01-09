@@ -1,9 +1,8 @@
+Environment = "prod"
 BindingPort=5000
 
 LiFiAPIURL='https://li.quest/v1/'
 
-FromChainKey = "goerli"
+FromChainKey = "arb"
 FromProviderURL= "https://goerli.infura.io/v3/6f63a416ecba41729aaa00f44acc5023"
 FromNetworkID = 5
-
-ToChainKey = "goerli"
