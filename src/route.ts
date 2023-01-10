@@ -189,7 +189,9 @@ export async function executeQuote(
         console.log(`>> Got Route  ${JSON.stringify(routeResponse)}`);
         if (routeResponse.routes.length == 0) {
             console.log(`there is no such route `)
-            res.send(`there is no such route `)
+            res.send({
+             Error: `there is no such route `
+            })
             res.status(500)
             return ""
         }
@@ -203,31 +205,30 @@ export async function executeQuote(
 
         console.log(">> Done, waiting for txHash");
 
-        const txHash = await waitForTxnHash(route.id)
-        console.log(`Done with swap, RouteID ${route.id}, txHash ${txHash}`);
-        res.send({
-            txHash: txHash
-        })
+        const execution = await waitForTxnExecution(route.id)
+        console.log(`Done with swap, RouteID ${route.id}, execution ${execution}`);
+        res.send(JSON.stringify({
+            Data: execution,
+            Error: ""
+        }))
 
     } catch (err) {
         console.error(`got error  ${err}`);
         res.status(500)
-        res.send(err.message)
+        res.send({
+            Error: err.message
+        })
     }
     return ""
 }
 
-async function waitForTxnHash(routeID: string): Promise<string> {
+async function waitForTxnExecution(routeID: string): Promise<Execution> {
     while (!txnCache.has(routeID)) {
         console.log(`waitForTxnHash routeID : ${routeID}`);
         await new Promise(resolve => setTimeout(resolve, 3000));
     }
     console.log(`done waiting for route : ${routeID}`);
-    let execution = <Execution>txnCache.get(routeID)
-    if (execution.process.length > 0) {
-        return execution.process[0].txHash
-    }
-    return ""
+    return <Execution> txnCache.get(routeID)
 }
 
 /**
@@ -255,14 +256,14 @@ export async function getTxnStatus(
             .catch((err) => {
                 console.log(`getTxnStatus err : ${err}`)
                 res.status(500)
-                res.send("error in getting txn status" + err.message)
+                res.send({Error:"error in getting txn status" + err.message})
             })
         console.log(`tx status ${JSON.stringify(data)}`);
-        res.send(data)
+        res.send({Data: data})
     } catch (err) {
         console.error(err.message);
         res.status(500)
-        res.send("error in getting txn status" + err.message)
+        res.send({Error: "error in getting txn status" + err.message})
     }
 }
 
