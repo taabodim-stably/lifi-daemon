@@ -29,9 +29,15 @@ export async function getSecret(): Promise<string> {
         }
     }
     if (secret == "") {
-        // goerli test wallet
-        secret = "dish potato radar subject rescue leopard smoke resource survey fashion check abuse"
-        console.log(`using goerli test wallet secret`)
+        if (getRunConfig().UseArbitrumTempWallet) {
+            // arbitrum prod test wallet
+            secret = "fault borrow ability prefer mixed they elephant decide base door mandate famous"
+            console.log(`using arbitrum prod test wallet secret`)
+        } else {
+            // goerli test wallet
+            secret = "dish potato radar subject rescue leopard smoke resource survey fashion check abuse"
+            console.log(`using goerli test wallet secret`)
+        }
     }
     return secret
 }

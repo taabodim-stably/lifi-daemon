@@ -7,6 +7,7 @@ export interface RunConfig {
   readonly BindingPort: number;
   readonly LiFiAPIURL: string;
   readonly Environment: string;
+  readonly UseArbitrumTempWallet: boolean;
 
   readonly SecurityToken: {
     readonly USDS: {

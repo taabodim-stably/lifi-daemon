@@ -1,9 +1,16 @@
 Environment = "beta"
 BindingPort=9888
 
-LiFiAPIURL='https://staging.li.quest/v1/'
+#LiFiAPIURL='https://staging.li.quest/v1/'
+LiFiAPIURL='https://li.quest/v1/'
 
-FromChainKey = "gor"
-FromProviderURL= "https://goerli.infura.io/v3/6f63a416ecba41729aaa00f44acc5023"
-FromNetworkID = 5
+#FromChainKey = "gor"
+#FromProviderURL= "https://goerli.infura.io/v3/6f63a416ecba41729aaa00f44acc5023"
+#FromNetworkID = 5
+
+
+UseArbitrumTempWallet = true
+FromChainKey = "arb"
+FromProviderURL= "https://arb1.arbitrum.io/rpc"
+FromNetworkID = 42161
 

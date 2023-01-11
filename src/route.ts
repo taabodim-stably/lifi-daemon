@@ -83,6 +83,12 @@ export function getChainByStr(
             return ChainKey.GOR;
         case "eth":
             return ChainKey.ETH;
+        case "pol":
+            return ChainKey.POL;
+        case "bsc":
+            return ChainKey.BSC;
+        case "ava":
+            return ChainKey.AVA;
         default:
             return undefined
     }
@@ -93,6 +99,10 @@ export function getCoinByKey(
 ): CoinKey {
     coinStr = coinStr.toUpperCase()
     switch (coinStr) {
+        case "WETH":
+            return CoinKey.WETH;
+        case "WBTC":
+            return CoinKey.WBTC;
         case "USDC":
             return CoinKey.USDC;
         case "USDT":
@@ -134,6 +144,7 @@ export async function executeQuote(
 
         let fromTokenStr = <string> req.query.fromToken
         let toTokenStr = <string> req.query.toToken
+        let toAddress = <string> req.query.toAddress
 
         let fromChain = getChainByKey(fromChainKey)
         let toChain = getChainByKey(toChainKey)
@@ -153,6 +164,7 @@ export async function executeQuote(
             fromTokenAddress: fromTokenObj.address,
             toChainId: getChainByKey(toChainKey).id,
             toTokenAddress: findDefaultToken(toToken, toChain.id).address,
+            toAddress: toAddress,
             options: {
                 slippage: 0.03, // = 3%
                 allowSwitchChain: true, // execute all transaction on starting chain
